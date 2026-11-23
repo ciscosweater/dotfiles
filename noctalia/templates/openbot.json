@@ -1,0 +1,18 @@
+{
+  "name": "Noctalia",
+  "appearance": "dark",
+  "colors": {
+    "canvas": "{{colors.surface.default.hex}}",
+    "frame": "{{colors.surface_container_lowest.default.hex}}",
+    "sidebar": "{{colors.surface_container_low.default.hex}}",
+    "surface": "{{colors.surface_container_high.default.hex}}",
+    "text": "{{colors.on_surface.default.hex}}",
+    "textMuted": "{{colors.on_surface_variant.default.hex}}",
+    "border": "{{colors.outline_variant.default.hex}}",
+    "accent": "{{colors.primary.default.hex}}",
+    "accentForeground": "{{colors.on_primary.default.hex}}",
+    "success": "#8fd19e",
+    "warning": "#e8c37a",
+    "danger": "{{colors.error.default.hex}}"
+  }
+}

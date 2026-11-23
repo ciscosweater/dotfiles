@@ -1,0 +1,17 @@
+// ────────────── Output Configuration ──────────────
+// Ajuste para os seus monitores: `niri msg outputs` mostra os nomes/modos disponíveis.
+// Sem nada aqui, o niri configura tudo sozinho.
+//
+// Exemplo: notebook à esquerda, monitor externo à direita, ambos 1920x1080.
+//
+// output "eDP-1" {
+//     mode "1920x1080"
+//     scale 1
+//     position x=0 y=0
+// }
+//
+// output "HDMI-A-1" {
+//     mode "1920x1080"
+//     scale 1
+//     position x=1920 y=0
+// }

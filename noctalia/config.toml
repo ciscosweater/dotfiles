@@ -1,0 +1,46 @@
+[shell]
+polkit_agent = true
+
+# Template próprio: gradiente no anel de foco + sombra colorida no niri
+[theme.templates.user.niri-extra]
+enabled = true
+input_path = "@HOME@/.config/noctalia/templates/niri-extra.kdl"
+output_path = "@HOME@/.config/niri/noctalia-extra.kdl"
+
+# Template próprio: cores do fzf (lidas via FZF_DEFAULT_OPTS_FILE no fish)
+[theme.templates.user.fzf-opts]
+enabled = true
+input_path = "@HOME@/.config/noctalia/templates/fzf-opts"
+output_path = "@HOME@/.config/fzf/noctalia-opts"
+
+# Template próprio: paleta do OpenBot (lida de ~/.config/OpenBot/themes/)
+[theme.templates.user.openbot]
+enabled = true
+input_path = "@HOME@/.config/noctalia/templates/openbot.json"
+output_path = "@HOME@/.config/OpenBot/themes/noctalia.json"
+
+# Template próprio: pastas do Papirus (cópia do template da comunidade, só Papirus + Papirus-Dark,
+# rodando em segundo plano para não atrasar os outros templates)
+[theme.templates.user.papirus]
+enabled = true
+input_path = "@HOME@/.config/noctalia/templates/papirus/colors"
+output_path = "@HOME@/.config/noctalia/templates/papirus/colors-final"
+post_hook = "bash @HOME@/.config/noctalia/templates/papirus/apply.sh"
+hook_async = true
+
+# Template próprio: Fluxer (pacote do repo, ~/.config/fluxer). Vincular o arquivo em Configurações → Aparência → Temas.
+[theme.templates.user.fluxer]
+enabled = true
+input_path = "@HOME@/.config/noctalia/templates/fluxer.css"
+output_path = "@HOME@/.config/fluxer/themes/noctalia.css"
+
+# Template próprio: paleta do qt5ct/qt6ct (cópia do embutido "qt", com linhas alternadas mais sutis)
+[theme.templates.user.qt6ct]
+enabled = true
+input_path = "@HOME@/.config/noctalia/templates/qtct.conf"
+output_path = "@HOME@/.config/qt6ct/colors/noctalia.conf"
+
+[theme.templates.user.qt5ct]
+enabled = true
+input_path = "@HOME@/.config/noctalia/templates/qtct.conf"
+output_path = "@HOME@/.config/qt5ct/colors/noctalia.conf"

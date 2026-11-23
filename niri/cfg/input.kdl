@@ -1,0 +1,31 @@
+// ────────────── Input Configuration ──────────────
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+
+input {
+    keyboard {
+        xkb {
+            // Sem nada aqui, o niri usa o layout do sistema (localectl).
+            // Para forçar um layout, descomente, por exemplo:
+            // layout "br"                       // ABNT2
+            // layout "us"; variant "intl"       // US International (dead keys)
+        }
+        numlock // Enable numlock on startup
+    }
+
+    touchpad {
+        tap // Enable tap-to-click
+        natural-scroll // Enable natural (macOS-style) scrolling
+    }
+
+    mouse {
+        // Aceleração desativada (perfil "flat" = movimento 1:1 do libinput)
+        accel-profile "flat"
+        accel-speed 0.0
+    }
+
+    // Foco segue o mouse ao passar por cima das janelas/saídas.
+    // Se quiser impedir que isso faça a view rolar, use:
+    //   focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse
+    workspace-auto-back-and-forth // Enable workspace back & forth switching
+}

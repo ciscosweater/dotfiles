@@ -1,0 +1,200 @@
+# Umbriel — configuração principal
+# Docs: https://docs.noctalia.dev/umbriel/
+# Validar: umbriel config validate
+#
+# Layout: dwindle (cada janela nova divide o tile focado).
+# Tema: Noctalia, que escreve noctalia.toml (include opcional abaixo).
+
+[include]
+files = ["keybinds.toml"]
+
+[include.optional]
+files = ["noctalia.toml"]
+
+# ────────────── Sessão ──────────────
+[general]
+# Dica: com dois monitores, acrescente "xrandr --output <NOME> --primary" para
+# o XWayland (Steam e outros apps X) usar o monitor certo como primário.
+autostart = ["noctalia"]
+mod_key = "Super"
+show_cheatsheet = false
+
+# Também em ~/.config/environment.d/10-desktop.conf; aqui garante que apps
+# abertos por `spawn` recebam as variáveis na hora.
+[environment]
+ELECTRON_OZONE_PLATFORM_HINT = "auto"
+QT_QPA_PLATFORM = "wayland;xcb"
+QT_QPA_PLATFORMTHEME = "qt5ct"
+QT_WAYLAND_DISABLE_WINDOWDECORATION = "1"
+XDG_MENU_PREFIX = "arch-"
+XCURSOR_THEME = "Bibata-Modern-Ice"
+XCURSOR_SIZE = "24"
+
+# ────────────── Entrada ──────────────
+[input.keyboard]
+# Sem layout aqui, vale o do sistema (localectl). Para forçar, por exemplo:
+# layout = "br"                      # ABNT2
+# layout = "us"  /  variant = "intl" # US International (dead keys)
+numlock_toggle = true
+
+[input.touchpad]
+tap = true
+natural_scroll = true
+
+[input.mouse]
+# Perfil "flat" = movimento 1:1 do libinput.
+accel_profile = "flat"
+sensitivity = 0.0
+
+[input.focus]
+# Equivale ao focus-follows-mouse do niri: hover foca, sem refocar sozinho
+# em mudanças de layout. ("always" também refoca sob ponteiro parado.)
+follows_mouse = "sloppy"
+hover_raises = true
+
+# ────────────── Monitores ──────────────
+# Workspaces lado a lado: a troca desliza na horizontal e o swipe de
+# 3 dedos troca de workspace no sentido esquerda/direita.
+# Só o eixo; modo/posição/escala seguem automáticos.
+# Troque pelos nomes dos seus monitores.
+# [output.eDP-1]
+# workspace_axis = "horizontal"
+#
+# [output.HDMI-A-1]
+# workspace_axis = "horizontal"
+# focus_at_startup = true   # monitor principal
+
+# ────────────── Layout ──────────────
+[layout]
+mode = "dwindle"
+gap = 10
+extent_presets = [0.333, 0.5, 0.667]
+
+[layout.dwindle]
+# Split directions ficam fixos depois de criados (menos "dança" ao fechar janelas).
+preserve_split = false
+# Janela nova ocupa a metade do lado do ponteiro.
+new_toward_cursor = false
+
+# ────────────── Aparência ──────────────
+[appearance]
+border_width = 3
+corner_radius = 16
+
+[appearance.blur]
+passes = 2
+radius = 3
+noise = 0.03
+saturation = 1.0
+
+[appearance.shadow]
+enabled = true
+softness = 28
+offset_x = 0
+offset_y = 6
+
+# ────────────── Janelas ──────────────
+# Blur nas janelas sobre o wallpaper (o Noctalia cuida dos painéis).
+[[window_rule]]
+blur = true
+
+# Janela de configurações do Noctalia flutuante.
+[[window_rule]]
+match.app_id = "^dev.noctalia.Noctalia$"
+default_floating = true
+default_floating_size_px = { width = 1080, height = 920 }
+
+# Seletor de tela do portal do Umbriel.
+[[window_rule]]
+match.app_id = "^dev.noctalia.UmbrielSharePicker$"
+default_floating = true
+default_floating_size_px = { width = 800, height = 600 }
+
+# Steam: no niri era "app-id=steam, exceto título Steam". O Umbriel não tem
+# "exclude" em window rule, então deixei desligado; se quiser a janela extra
+# flutuante, descomente e teste (isso também flutua a janela principal).
+# [[window_rule]]
+# match.app_id = "^steam$"
+# default_floating = true
+
+[[window_rule]]
+match.title = "^notificationtoasts_.+_desktop$"
+default_position = { x = 0, y = 0, anchor = "bottom_right" }
+default_focused = false
+default_pinned = true
+
+[[window_rule]]
+match.title = "^(Picture-in-Picture|Picture in picture)$"
+default_floating = true
+default_position = { x = 20, y = 20, anchor = "bottom_right" }
+
+# ────────────── Camadas (Noctalia) ──────────────
+[[layer_rule]]
+match.namespace = "^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd|desktop-widget-[^\"]*)$"
+blur = true
+blur_ignore_alpha = 0.5
+blur_popups = true
+
+# Painéis/dock/notificações abrem sobre janelas: blur do conteúdo vivo.
+[[layer_rule]]
+match.namespace = "^noctalia-(notification|dock|panel|attached-panel|osd)$"
+blur_optimized = false
+
+# ────────────── Animações ──────────────
+# Docs: https://docs.noctalia.dev/umbriel/animation/
+# Molas: damping < 1 quica, = 1 para sem passar do ponto, > 1 mais lento.
+# stiffness maior = assenta mais rápido. (Mola ignora duration_ms.)
+[animation]
+enabled = true
+duration_ms = 250
+curve = "easeout"
+
+[animation.springs]
+quique    = { damping = 0.75, stiffness = 600 }  # abrir janela
+leve      = { damping = 0.8,  stiffness = 700 }  # mover/redimensionar
+deslize   = { damping = 0.85, stiffness = 650 }  # trocar workspace
+rapido    = { damping = 1.0,  stiffness = 1400 } # fechar janela
+firme     = { damping = 1.0,  stiffness = 900 }  # borda, opacidade
+
+[animation.windows_in]
+style = "popin"
+scale = 0.85
+curve = "quique"
+
+[animation.windows_out]
+style = "popin"
+scale = 0.9
+curve = "rapido"
+
+[animation.windows_move]
+curve = "leve"
+
+[animation.windows_resize]
+curve = "leve"
+
+[animation.windows_opacity]
+curve = "firme"
+
+[animation.workspaces]
+style = "slide"
+curve = "deslize"
+
+[animation.overview]
+curve = "deslize"
+workspace_curve = "leve"
+
+[animation.border]
+curve = "firme"
+
+# Janela "gelatina" ao arrastar com o mouse.
+[animation.windows_drag]
+physics = true
+stiffness = 80.0   # padrão 36 — maior = volta pro lugar mais rápido
+damping = 12.0     # padrão 6.5 — maior = balanço morre mais rápido
+coupling = 100.0
+pointer_response = 2.0
+max_displacement_px = 200.0
+settle_after_pause_s = 0.25
+
+# ────────────── Atalhos ──────────────
+# Ver keybinds.toml.

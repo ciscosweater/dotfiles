@@ -1,0 +1,27 @@
+// Gerado pelo Noctalia a partir do wallpaper — não edite ~/.config/niri/noctalia-extra.kdl,
+// edite ~/.config/noctalia/templates/niri-extra.kdl.
+layout {
+    // Anel de foco: gradiente primary → tertiary na janela ativa.
+    focus-ring {
+        width 3
+        active-gradient from="{{colors.primary.default.hex}}" to="{{colors.tertiary.default.hex}}" angle=135 relative-to="workspace-view"
+        inactive-color "{{colors.outline_variant.default.hex}}"
+        urgent-color "{{colors.error.default.hex}}"
+    }
+
+    // Borda desligada: o anel de foco já marca a janela ativa sem ocupar espaço.
+    border {
+        off
+    }
+
+    // Sombra neutra (sem brilho colorido), um pouco mais forte na janela ativa.
+    shadow {
+        on
+        softness 28
+        spread 3
+        offset x=0 y=6
+        draw-behind-window true
+        color "{{colors.shadow.default.hex}}88"
+        inactive-color "{{colors.shadow.default.hex}}66"
+    }
+}
